@@ -1,4 +1,5 @@
 use clap::Parser;
+use ipnetwork::{IpNetwork, Ipv4Network};
 use std::io::{self, BufRead};
 use std::net::Ipv4Addr;
 
@@ -19,14 +20,23 @@ struct Args {
 }
 
 fn parse_ip_range(s: &str) -> Result<(Ipv4Addr, Ipv4Addr), &'static str> {
-    let parts: Vec<&str> = s.split('-').collect();
-    if parts.len() != 2 {
-        return Err("Range must be in the format x.x.x.x-x.x.x.x");
-    }
-    let start_ip = parts[0]
-        .parse::<Ipv4Addr>()
-        .map_err(|_| "Invalid start IP")?;
-    let end_ip = parts[1].parse::<Ipv4Addr>().map_err(|_| "Invalid end IP")?;
+    let (start_ip, end_ip) = if s.contains('-') {
+        let parts: Vec<&str> = s.split('-').collect();
+        if parts.len() != 2 {
+            return Err("Range must be in the format x.x.x.x-x.x.x.x");
+        }
+        let start_ip = parts[0]
+            .parse::<Ipv4Addr>()
+            .map_err(|_| "Invalid start IP")?;
+        let end_ip = parts[1].parse::<Ipv4Addr>().map_err(|_| "Invalid end IP")?;
+        (start_ip, end_ip)
+    } else {
+        // assume cidr and handle that
+        let mut network = s.parse::<Ipv4Network>().unwrap().iter();
+        let start_ip = network.next();
+        let end_ip = network.last();
+        (start_ip.unwrap(), end_ip.unwrap())
+    };
     Ok((start_ip, end_ip))
 }
 
