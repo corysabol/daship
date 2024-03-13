@@ -38,6 +38,7 @@ Examples:
 ```
 
 `daship` will then print the list of IP addresses within the specified range to the standard output.
+Input files must be newline delimited ranges. The file can contain both CIDR and dash delimited ranges.
 
 ## Example
 
