@@ -38,7 +38,17 @@ Examples:
 ```
 
 `daship` will then print the list of IP addresses within the specified range to the standard output.
+
+### STDIN Input Format
 Input files must be newline delimited ranges. The file can contain both CIDR and dash delimited ranges.
+
+```
+10.0.0.1-10.0.0.255
+192.168.1.16-192.168.2.16
+10.0.0.0-10.0.0.0
+10.0.0.10-10.0.0.16
+10.0.0.0/16
+```
 
 ## Example
 
