@@ -1,13 +1,21 @@
 use clap::Parser;
+use std::io::{self, BufRead};
 use std::net::Ipv4Addr;
-use std::str::FromStr;
 
 #[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
+#[command(
+    author = "Cory Sabol",
+    version = "v0.2.0",
+    about = "Expands IP addresses from dash delimited ranges as well as CIDR ranges. Can accept a list of ranges from STDIN.",
+    after_help = "Examples:
+    cat ranges.txt | daship > ips.txt
+    daship --range '10.0.0.0-10.0.0.255' > ips.txt
+    "
+)]
 struct Args {
     /// IP range in the format x.x.x.x-x.x.x.x
-    #[arg(long, short, value_parser = parse_ip_range)]
-    range: (Ipv4Addr, Ipv4Addr),
+    #[arg(long, short)]
+    range: Option<String>,
 }
 
 fn parse_ip_range(s: &str) -> Result<(Ipv4Addr, Ipv4Addr), &'static str> {
@@ -38,9 +46,40 @@ fn expand_ip_range(start_ip: Ipv4Addr, end_ip: Ipv4Addr) -> Vec<Ipv4Addr> {
 fn main() {
     let args = Args::parse();
 
-    let ip_list = expand_ip_range(args.range.0, args.range.1);
+    // Did we get a value for range?
+    match args.range {
+        Some(s) => {
+            // Try to parse the range
+            let (start_ip, end_ip) = match parse_ip_range(&s) {
+                Ok(r) => r,
+                Err(err) => {
+                    todo!("handle err {:?}", err)
+                }
+            };
 
-    for ip in ip_list {
-        println!("{}", ip);
+            // Display the IP addresses
+            let ip_list = expand_ip_range(start_ip, end_ip);
+            for ip in ip_list {
+                println!("{}", ip);
+            }
+        }
+        None => {
+            // Assume we got input from stdin as list of cidr or dash ranges
+            let stdin = io::stdin();
+            for range in stdin.lock().lines() {
+                // parse the current range
+                // TODO: Handle error case of Result from lines iter
+                let (start_ip, end_ip) = match parse_ip_range(&range.unwrap()) {
+                    Ok(r) => r,
+                    Err(err) => todo!("Handle error {:?}", err),
+                };
+
+                // output the ips
+                let ip_list = expand_ip_range(start_ip, end_ip);
+                for ip in ip_list {
+                    println!("{}", ip);
+                }
+            }
+        }
     }
 }
