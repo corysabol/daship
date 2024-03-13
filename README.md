@@ -1,11 +1,17 @@
-# daship: A Simple Tool for Expanding Dash-Delimited IP Ranges
+# 🏃‍♂️💨 daship: A Simple Tool for Expanding Dash-Delimited and CIDR IP Ranges
 
-`daship` is a command-line utility written in Rust, designed to expand IP ranges specified in a dash-delimited format (e.g., `192.168.1.1-192.168.1.5`) into a list of individual IP addresses.
+`daship` is a command-line utility written in Rust, designed to expand IP ranges specified in a dash-delimited or CIDR format (e.g., `192.168.1.1-192.168.1.5`, `10.0.0.0/16`) into a list of individual IP addresses.
+
+## Features
+- ✅ Expand IPv4 dash delimited ranges
+- ✅ Expand IPv4 CIDR ranges
+- ✅ Pass a list of ranges via STDIN
+- 🚧 TOOD: IPv6 support
 
 ## Installation
 
 ### Binary Release
-The recommened way to get `daship` is to download the binary for your platform from the [releases](https://github.com/corysabol/daship/releases)
+The recommend way to get `daship` is to download the binary for your platform from the [releases](https://github.com/corysabol/daship/releases)
 
 ### Build from source
 
