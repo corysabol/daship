@@ -22,12 +22,6 @@ cargo build --release
 The executable will be located in `./target/release/daship`.
 
 ## Usage
-
-To use `daship`, simply run the executable with the `--range` argument followed by your IP range in dash-delimited format:
-
-```bash
-./daship --range 192.168.1.1-192.168.1.5
-
 ```
 Expands IP addresses from dash delimited ranges as well as CIDR ranges. Can accept a list of ranges from STDIN.
 
