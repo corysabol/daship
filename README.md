@@ -27,9 +27,23 @@ To use `daship`, simply run the executable with the `--range` argument followed 
 
 ```bash
 ./daship --range 192.168.1.1-192.168.1.5
+
+```
+Expands IP addresses from dash delimited ranges as well as CIDR ranges. Can accept a list of ranges from STDIN.
+
+Usage: daship [OPTIONS]
+
+Options:
+  -r, --range <RANGE>  IP range in the format x.x.x.x-x.x.x.x
+  -h, --help           Print help
+  -V, --version        Print version
+
+Examples:
+    cat ranges.txt | daship > ips.txt
+    daship --range '10.0.0.0-10.0.0.255' > ips.txt
 ```
 
-`dasip` will then print the list of IP addresses within the specified range to the standard output.
+`daship` will then print the list of IP addresses within the specified range to the standard output.
 
 ## Example
 
