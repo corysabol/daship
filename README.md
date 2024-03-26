@@ -41,6 +41,7 @@ Options:
 Examples:
     cat ranges.txt | daship > ips.txt
     daship --range '10.0.0.0-10.0.0.255' > ips.txt
+    cat excluded_ranges.txt | daship | grep -v -f - live_hosts.txt > live_inscope.txt
 ```
 
 `daship` will then print the list of IP addresses within the specified range to the standard output.
