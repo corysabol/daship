@@ -11,7 +11,7 @@
 ## Installation
 
 ### Binary Release
-The recommend way to get `daship` is to download the binary for your platform from the [releases](https://github.com/corysabol/daship/releases)
+The recommended way to get `daship` is to download the binary for your platform from the [releases](https://github.com/corysabol/daship/releases)
 
 ### Build from source
 
