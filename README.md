@@ -34,7 +34,7 @@ Expands IP addresses from dash delimited ranges as well as CIDR ranges. Can acce
 Usage: daship [OPTIONS]
 
 Options:
-  -r, --range <RANGE>  IP range in the format x.x.x.x-x.x.x.x
+  -r, --range <RANGE>  IP range in the format x.x.x.x-x.x.x.x or CIDR notation
   -h, --help           Print help
   -V, --version        Print version
 
